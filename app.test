@@ -1,0 +1,31 @@
+const express = require('express');
+
+const app = express();
+
+require('dotenv/config');
+
+const api = process.env.API_URL;
+
+// Middleware: this is a replacement of bodyParser
+app.use(express.json())
+
+app.get(`${api}/products`, (req, res) => {
+    const product = {
+        id: 1,
+        name: "hair dresser",
+        image: "some url"
+    }
+    res.send(product);
+})
+
+// this will post data to the backend
+app.post(`${api}/products`, (req, res) => {
+    const newProduct = req.body;
+    console.log(newProduct);
+    res.send(newProduct);
+})
+
+app.listen(3000, ()=> {
+    console.log(api)
+    console.log('server is running now on http://localhost:3000');
+})
