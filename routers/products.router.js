@@ -107,7 +107,7 @@ router.get(`/:id` , async (req, res) => {
 
 
 // update a product 
-router.put('/:id',uploadOption.single, async(req, res) =>{
+router.put('/:id',uploadOption.single('image'), async(req, res) =>{
     // check if the id is a valid mongo id 
    if(!mongoose.isValidObjectId(req.params.id)){
     return res.status(400).json({success: false, message:"invalid product id"})
@@ -133,7 +133,7 @@ router.put('/:id',uploadOption.single, async(req, res) =>{
     }
 
 
-    const product = await Product.findByIdAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
         req.params.id,
         {
                 name: req.body.name,
@@ -150,12 +150,12 @@ router.put('/:id',uploadOption.single, async(req, res) =>{
         },
         // this will return new data instead of the old one
         {new: true}
-    ).populate('category')
-    if(!product) {
+    );
+    if(!updatedProduct) {
         return res.status(500).json({success:false, message: 'product coud not be updated'})
     }
           
-    res.send(product)
+    res.send(updatedProduct)
     
 })
 
