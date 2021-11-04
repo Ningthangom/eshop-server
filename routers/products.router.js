@@ -82,7 +82,7 @@ router.get(`/:id` , async (req, res) => {
      return res.status(400).send('Please add image')
  }
  const filename = req.file.filename;
- const basePath = `${req.protocol}://${req.get('host')}/public/upload`
+ const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
 
  let product = new Product({
     name: req.body.name,
